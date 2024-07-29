@@ -6,7 +6,8 @@ const Button = ({
     children,
     variant = 'primary',
     size = 'sm',
-    disabled = false, block,
+    disabled = false,
+    block,
     shape = 'shaped',
     icon,
     iconPosition = 'start',
@@ -22,41 +23,29 @@ const Button = ({
         $shapeSize={size}
         $outline={outline}
     >
-        {icon && iconPosition === 'start' && <IconWrapper>{icon}</IconWrapper>}
-        <ButtonWrapper>{children}</ButtonWrapper>
-        {icon && iconPosition === 'end' && <IconWrapper>{icon}</IconWrapper>}
+        {icon && iconPosition === 'start' && <IconWrapper $sizeVariant={size}>{icon}</IconWrapper>}
+        <span>{children}</span>
+        {icon && iconPosition === 'end' && <IconWrapper $sizeVariant={size}>{icon}</IconWrapper>}
     </StyledButton>
 );
 
+
 export default Button;
 
-const IconWrapper = styled.span`
-  display: inline-flex;
-  align-items: center;
-`;
 
-const ButtonWrapper = styled.span``;
-
-const variantColors = {
-    primary: '#007bff',
-    secondary: '#6c757d',
-    success: '#28a745',
-    danger: '#dc3545',
-    warning: '#ffc107',
-    light: '#f8f9fa',
-    link: '#007bff'
-};
 
 const StyledButton = styled.button`
   display: grid;
-  grid-template-columns: auto auto;
-  gap: 5px;
+  grid-auto-flow: column;
   align-items: center;
+  justify-content: center;
+  gap: 5px;
   border: none;
   cursor: pointer;
   text-align: center;
   font-family: Arial;
-  
+  transition: 0.2s;
+
   ${({ $sizeVariant }) => sizeVariants[$sizeVariant]}
   ${({ $variant, $outline }) => $outline ? buttonOutlineVariants[$variant] : buttonVariants[$variant]}
   ${({ $block }) => $block && css`width: 100%;`}
@@ -67,19 +56,36 @@ const StyledButton = styled.button`
   }
 `;
 
+const IconWrapper = styled.span`
+    display: inline-flex;
+    align-items: center;
+    ${({ $sizeVariant }) => iconSizeVariants[$sizeVariant]}
+`;
+
+const iconSizeVariants = {
+    sm: css`
+      font-size: 14px;
+    `,
+    md: css`
+      font-size: 18px;
+    `,
+    lg: css`
+      font-size: 22px;
+    `,
+};
 
 const sizeVariants = {
     sm: css`
       font-size: 14px;
-      padding: 4px 10px;
+      padding: 3px 8px;
     `,
     md: css`
       font-size: 14px;
-      padding: 8px 22px;
+      padding: 4px 15px;
     `,
     lg: css`
       font-size: 16px;
-      padding: 12px 20px;
+      padding: 7px 15px;
     `,
 };
 
